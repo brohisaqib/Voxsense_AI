@@ -1,20 +1,42 @@
-# Virtual Environment
-venv/
-.env
-
-# Python cache
+# =========================
+# Python
+# =========================
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
 
+# =========================
+# Virtual Environment
+# =========================
+venv/
+env/
+.venv/
+
+# =========================
+# Environment files
+# =========================
+.env
+
+# =========================
 # Logs
+# =========================
 logs/
 *.log
 
-# Model files (heavy files)
+# =========================
+# IDE
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# Model / Large files
+# =========================
 yolov8n.pt
 
+# =========================
 # OS files
+# =========================
 .DS_Store
-
-# Data files (optional)
-data/
+Thumbs.db
