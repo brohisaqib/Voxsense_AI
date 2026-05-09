@@ -1,0 +1,20 @@
+# Virtual Environment
+venv/
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Logs
+logs/
+*.log
+
+# Model files (heavy files)
+yolov8n.pt
+
+# OS files
+.DS_Store
+
+# Data files (optional)
+data/

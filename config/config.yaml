@@ -1,0 +1,129 @@
+# ============================================================
+# VoxSense Online AI - Configuration
+# ============================================================
+
+app:
+  name: "VoxSense Online AI"
+  version: "1.0.0"
+  description: "AI Voice Assistant for Blind and Visually Impaired Users"
+  debug: false
+
+backend:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 4
+  reload: false
+  cors_origins:
+    - "http://localhost:8501"
+    - "http://127.0.0.1:8501"
+    - "*"
+
+frontend:
+  port: 8501
+  page_title: "VoxSense AI"
+  page_icon: "👁️"
+
+llm:
+  primary: "groq"
+  fallback: "openai"
+  groq:
+    model: "llama3-70b-8192"
+    max_tokens: 1024
+    temperature: 0.7
+    stream: true
+  openai:
+    model: "gpt-4o"
+    max_tokens: 1024
+    temperature: 0.7
+    stream: true
+  system_prompt: |
+    You are VoxSense, an advanced AI assistant specifically designed to help blind and visually 
+    impaired users navigate the world safely and independently. You are compassionate, precise, 
+    and always prioritize safety. 
+    
+    When describing surroundings:
+    - Be specific about directions (left, right, ahead, behind)
+    - Mention distances when possible (nearby, 2 meters, close, far)
+    - Prioritize hazards and obstacles
+    - Use clear, simple language
+    - Be concise but complete
+    
+    You can help with: navigation guidance, object identification, scene description, 
+    reading text, answering questions, and general assistance.
+
+speech:
+  stt:
+    provider: "deepgram"
+    model: "nova-2"
+    language: "en-US"
+    smart_format: true
+    interim_results: true
+  tts:
+    provider: "edge-tts"
+    voice: "en-US-JennyNeural"
+    rate: "+0%"
+    pitch: "+0Hz"
+    volume: "+0%"
+
+vision:
+  yolo:
+    model: "yolov8n.pt"
+    confidence: 0.5
+    iou: 0.45
+    max_detections: 20
+    target_classes:
+      - person
+      - chair
+      - table
+      - door
+      - stairs
+      - car
+      - bicycle
+      - bottle
+      - cup
+      - cell phone
+      - laptop
+      - book
+      - backpack
+      - umbrella
+      - handbag
+      - suitcase
+      - bus
+      - truck
+      - traffic light
+      - stop sign
+      - bench
+      - bed
+      - toilet
+      - sink
+  guidance:
+    alert_cooldown_seconds: 3
+    distance_zones:
+      very_close: 0.35   # bbox height ratio > 35%
+      close: 0.20         # bbox height ratio 20-35%
+      medium: 0.10        # bbox height ratio 10-20%
+      far: 0.0            # bbox height ratio < 10%
+
+memory:
+  chroma:
+    collection_name: "voxsense_memory"
+    persist_dir: "./data/chroma"
+  max_history: 20
+  similarity_top_k: 5
+
+security:
+  rate_limit_per_minute: 60
+  max_audio_size_mb: 10
+  max_image_size_mb: 5
+  allowed_audio_formats:
+    - "audio/wav"
+    - "audio/webm"
+    - "audio/mp4"
+    - "audio/ogg"
+
+logging:
+  level: "INFO"
+  format: "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"
+  file: "./logs/voxsense.log"
+  rotation: "10 MB"
+  retention: "7 days"
